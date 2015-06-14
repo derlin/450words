@@ -1,0 +1,20 @@
+body {
+  padding-top: 50px;
+}
+
+.margin-auto{
+    margin: 20px
+    auto;
+}
+
+table#months_progress{
+    width: 100%;
+}
+table#months_progress tr td {
+    font-size: 11px;
+    font-weight: bold;
+    width: 20px;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
