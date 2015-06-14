@@ -1,5 +1,5 @@
 <?php include 'utils/accesscontrol.php'; ?>
-<?php include 'MyDate.php'; ?>
+<?php include 'MyDateManager.php'; ?>
     <!DOCTYPE html PUBLIC "-//W3C/DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml">
@@ -14,6 +14,7 @@
         <![endif]-->
         <link type="text/css" href="/css/bootstrap.min.css" rel='stylesheet'/>
         <link type="text/css" href="/css/styles.css" rel='stylesheet'/>
+        <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
     </head>
 
     <body>
@@ -39,11 +40,9 @@
     </div>
 
     <?php
-    $mydate = new MyDate();
 
-    $date = strtotime(isset($_GET['date']) ? $_GET['date'] : 'now');
-    $days_in_month = date('t', $date);
-    $first_day_of_month = strtotime(date('Y.m.1', $date));
+    $datemgr = new MyDateManager(isset($_GET['date']) ? $_GET['date'] : 'now');
+
 
     ?>
     <div class="container">
@@ -51,51 +50,44 @@
         <div class="text-center">
             <h1>750 words</h1>
 
-            <h2><?= date('F Y', $date) ?></h2>
+            <h2><?= $datemgr->format('F Y') ?></h2>
+
 
             <div>
-
-                <table id="months_progress" class="margin-auto">
-                    <tr>
-                        <td><a href="/protectedpage.php?date=<?= $mydate->add_month(-1, true) ?>">
-                                &lt; &lt; </a></td>
-                        <?php
-                        for ($i = 1; $i <= $days_in_month; $i++) {
-                            echo '<td><img src="' . $mydate->get_image($i) . '" height="30" title="' . $i . ' ' . date
-                            ('F', $date) .
-                                '"/></td>';
-                        }
-                        ?>
-                        <td><a href="/protectedpage.php?date=<?=$mydate->add_month(+1, true)?>">
-                                &gt; &gt; </a></td>
-                    </tr>
-                </table>
+                <?= $datemgr->print_month_table() ?>
             </div>
 
-            <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text
-                and a
-                mostly barebones HTML document.</p>
+        </div>
+
+        <h2 class="green"><?= $datemgr->format('l jS \of F Y') ?></h2>
+
+        <div id="textarea_container">
+            <?= $datemgr->print_text_area() ?>
+        </div>
+
+        <div id="counts">
+            <div style="font-weight: bold">
+                <span id="wordCount">0</span> Words.
+            </div>
+            <div class="count_details">
+                Total Characters(including trails): <span id="totalChars">0</span><br/>
+                Characters (excluding trails): <span id="charCount">0</span><br/>
+                Characters (excluding all spaces): <span id="charCountNoSpace">0</span>
+            </div>
         </div>
 
     </div>
+
     <!-- /.container -->
     <!-- script references -->
-    <script type="text/javascript" src="/js/jquery-1.11.3.min.js"/>
-    <script type="text/javascript" src="/js/bootstrap.min.js"/>
+    <script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/counter.js"></script>
+    <script type="text/javascript">
+        $( document ).ready( function(){
+            $( "[data-toggle='tooltip']" ).tooltip();
+        } );
+    </script>
     </body>
     </html>
 <?php
-
-function format_date($d)
-{
-    return date('Y-m-d', $d);
-}
-
-function month($d, $i){
-    return mktime(0, 0, 0, date("n", $d) + $i, 1);
-}
-
-function add_date($d, $str)
-{
-    return strtotime(date('Y-m-d', $d) . $str);
-}

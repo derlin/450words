@@ -1,15 +1,15 @@
 body {
-  padding-top: 50px;
+    padding-top: 50px;
 }
 
-.margin-auto{
-    margin: 20px
-    auto;
+.margin-auto {
+    margin: 20px auto;
 }
 
-table#months_progress{
+table#months_progress {
     width: 100%;
 }
+
 table#months_progress tr td {
     font-size: 11px;
     font-weight: bold;
@@ -17,4 +17,42 @@ table#months_progress tr td {
     text-align: center;
     padding: 0;
     margin: 0;
+}
+
+.container {
+    text-align: justify;
+    max-width: 800px;
+    margin-bottom: 20px;
+}
+
+body {
+    line-height: 1.5;
+    font-family: Helvetica, sans-serif;
+    color: #333333;
+    font-size: 16px;
+}
+
+textarea#entry_body {
+    resize: none;
+    overflow-y: hidden;
+    height: 500px;
+    width: 100%;
+    border: none;
+    font-size: 20px;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.green {
+    color: #4DB559;
+    font-family: "Bree Serif", helvetica, sans-serif;
+}
+
+.count_details {
+    font-family: "Bree Serif", helvetica, sans-serif;
+    font-size: 80%;
+    font-style: italic;
 }
