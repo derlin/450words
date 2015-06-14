@@ -10,19 +10,18 @@ include 'MyDate.php';
 class MyDateManager
 {
 
-    private $date, $is_now;
+    private $date;
     private $existing_words = array();
 
-    public function __construct($date_str = 'now')
+    public function __construct($mydate)
     {
-        $this->date = new MyDate($date_str);
-        $this->is_now = $this->date->to_string() == MyDate::format(strtotime('now'));
+        $this->date = $mydate;
 
         $mysqli = dbConnect("words");
         $sql = $mysqli->prepare('select day, word from words where userid = ? and day between ? and ?;');
         $sql->bind_param('sss', $_SESSION['uid'], //
-            MyDate::format($this->date->get_date_for(1)), //
-            MyDate::format($this->date->get_date_for(31)));
+            F::link($this->date->get_date_for(1)), //
+            F::link($this->date->get_date_for(31)));
 
         $sql->bind_result($day, $text);
         $sql->execute();
@@ -54,8 +53,9 @@ class MyDateManager
 
     public function print_month_row($i, $txt)
     {
+        $link = F::link($this->date->month_offset($i));
         ?>
-        <td><a href="/protectedpage.php?date=<?= $this->date->month_offset($i, true) ?>">
+        <td><a href="/protectedpage.php?date=<?= $link ?>">
                 <?= $txt ?></a></td>
     <?php
     }
@@ -63,13 +63,15 @@ class MyDateManager
     public function print_text_area()
     {
         $text = $this->get_cur_text_entry();
-        if ($this->is_now) {
+
+        if ($this->date->is_now()) {
             ?>
             <form method="post" action="/autosave.php">
                 <textarea cols="40"
                           id="entry_body"
                           name="entry_body" rows="20"
                     ><?= $text ?></textarea>
+                <button class="btn btn-primary" type="submit" />
             </form>
         <?php
         } else {
@@ -81,38 +83,30 @@ class MyDateManager
         }
     }
 
-    public function format($format = MyDate::FORMAT)
-    {
-        return date($format, $this->date->get());
-    }
-
-    public function get_readable_date()
-    {
-        return $this->date->to_readable_string();
-    }
 
     public function get_cur_text_entry()
     {
-        $key = $this->date->to_string();
+        $key = F::link($this->date);
         return array_key_exists($key, $this->existing_words) ?
             $this->existing_words[$key] : "";
     }
 
     private function print_td($i)
     {
-        $d = $this->date->get_date_for($i, true);
+        $d = $this->date->get_date_for($i);
+        $d_str = (string)$d;
         $img_src = '/resources/';
-        $title = $d . ' : ';
+        $title = $d_str . ' : ';
         $href = "javascript:void(0)";
 
 
-        if (array_key_exists($d, $this->existing_words)) {
-            $count = str_word_count(strip_tags($this->existing_words[$d]));
+        if (array_key_exists($d_str, $this->existing_words)) {
+            $count = str_word_count(strip_tags($this->existing_words[$d_str]));
             $img_src .= $count >= 750 ? '2-points.png' : '1-point.png';
             $title .= $count . ' words!';
-            $href = "protectedpage.php?date=" . $d;
+            $href = "protectedpage.php?date=" . $d_str;
 
-        } elseif ($d > MyDate::format(strtotime('now'))) { // future entry
+        } elseif ($d->is_future()) { // future entry
             $img_src .= 'future-points.png';
             $title .= 'not available yet';
 
@@ -121,9 +115,9 @@ class MyDateManager
             $title .= 'you missed this day!';
         }
 
-        if ($i == date('d', strtotime('now'))) {
-            if (!$this->is_now) {
-                $href = "protectedpage.php?date=" . $d;
+        if ($d->is_now()) {
+            if (!$this->date->is_now()) {
+                $href = "protectedpage.php?date=" . $d_str;
             }
             $title = "TODAY";
         }

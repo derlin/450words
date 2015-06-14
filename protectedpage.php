@@ -41,8 +41,8 @@
 
     <?php
 
-    $datemgr = new MyDateManager(isset($_GET['date']) ? $_GET['date'] : 'now');
-
+    $mydate = MyDate::from_string(isset($_GET['date']) ? $_GET['date'] : 'now');
+    $datemgr = new MyDateManager($mydate);
 
     ?>
     <div class="container">
@@ -50,7 +50,7 @@
         <div class="text-center">
             <h1>750 words</h1>
 
-            <h2><?= $datemgr->format('F Y') ?></h2>
+            <h2><?= F::month_year($mydate) ?></h2>
 
 
             <div>
@@ -59,7 +59,7 @@
 
         </div>
 
-        <h2 class="green"><?= $datemgr->format('l jS \of F Y') ?></h2>
+        <h2 class="green"><?= F::pretty($mydate) ?></h2>
 
         <div id="textarea_container">
             <?= $datemgr->print_text_area() ?>

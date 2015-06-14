@@ -46,6 +46,10 @@ textarea#entry_body {
     box-shadow: none;
 }
 
+#text_entry{
+    margin: 30px auto;
+}
+
 .green {
     color: #4DB559;
     font-family: "Bree Serif", helvetica, sans-serif;
