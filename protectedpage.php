@@ -1,4 +1,5 @@
 <?php include 'utils/accesscontrol.php'; ?>
+<?php include 'MyDate.php'; ?>
     <!DOCTYPE html PUBLIC "-//W3C/DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml">
@@ -38,11 +39,12 @@
     </div>
 
     <?php
+    $mydate = new MyDate();
+
     $date = strtotime(isset($_GET['date']) ? $_GET['date'] : 'now');
     $days_in_month = date('t', $date);
     $first_day_of_month = strtotime(date('Y.m.1', $date));
 
-    echo date("Y-m-d", $ts);
     ?>
     <div class="container">
 
@@ -55,15 +57,16 @@
 
                 <table id="months_progress" class="margin-auto">
                     <tr>
-                        <td><a href="/protectedpage.php?date=<?= format_date(month($date, -1))?>">
+                        <td><a href="/protectedpage.php?date=<?= $mydate->add_month(-1, true) ?>">
                                 &lt; &lt; </a></td>
                         <?php
                         for ($i = 1; $i <= $days_in_month; $i++) {
-                            echo '<td><img src="/resources/no-points.png" height="30" title="' . $i . ' ' . date('F', $date) .
+                            echo '<td><img src="' . $mydate->get_image($i) . '" height="30" title="' . $i . ' ' . date
+                            ('F', $date) .
                                 '"/></td>';
                         }
                         ?>
-                        <td><a href="/protectedpage.php?date=<?= format_date(month($date, +1))?>">
+                        <td><a href="/protectedpage.php?date=<?=$mydate->add_month(+1, true)?>">
                                 &gt; &gt; </a></td>
                     </tr>
                 </table>
