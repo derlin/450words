@@ -62,33 +62,38 @@ class MyDateManager
 
     public function print_text_area()
     {
-        $text = $this->get_cur_text_entry();
-
         if ($this->date->is_now()) {
             ?>
-            <form method="post" action="/autosave.php">
-                <textarea cols="40"
-                          id="entry_body"
-                          name="entry_body" rows="20"
-                    ><?= $text ?></textarea>
-                <button class="btn btn-primary" type="submit" />
+            <div class="text-right">
+                <button class="btn btn-default" onclick="save()">save</button>
+            </div>
+            <form>
+                <input type="text" id="day" name="day" hidden="hidden" value="<?= (string)$this->date ?>"/>
+                <textarea id="entry_body" name="entry_body"
+                    ><?=  $this->get_cur_text_entry(false) ?></textarea>
             </form>
         <?php
         } else {
             ?>
             <div id="text_entry">
-                <?= $text ?>
+                <?=  $this->get_cur_text_entry() ?>
             </div>
         <?php
         }
     }
 
 
-    public function get_cur_text_entry()
+    public function get_cur_text_entry($as_html = true)
     {
+        $text = "";
         $key = F::link($this->date);
-        return array_key_exists($key, $this->existing_words) ?
-            $this->existing_words[$key] : "";
+        if (array_key_exists($key, $this->existing_words)) {
+            $text = $this->existing_words[$key];
+            $text = str_replace('\n', 'NNEWLINEE', $text);
+            $text = stripslashes($text);
+            $text = str_replace('NNEWLINEE', $as_html ? '<br />' : '&#10;', $text);
+        }
+        return $text;
     }
 
     private function print_td($i)

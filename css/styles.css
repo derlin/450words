@@ -22,7 +22,6 @@ table#months_progress tr td {
 .container {
     text-align: justify;
     max-width: 800px;
-    margin-bottom: 20px;
 }
 
 body {
@@ -35,11 +34,13 @@ body {
 textarea#entry_body {
     resize: none;
     overflow-y: hidden;
-    height: 500px;
+    height: 200px;
     width: 100%;
     border: none;
     font-size: 20px;
+    text-align: justify;
     outline: none;
+    margin-bottom: 50px;
 
     -webkit-box-shadow: none;
     -moz-box-shadow: none;

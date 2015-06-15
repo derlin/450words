@@ -22,19 +22,22 @@ counter = function() {
 };
 
 $(document).ready(function() {
-    if(!$('#entry_body')) return;
+    if( $( 'textarea' ).size() == 0) return; // no textarea
+
     $('#entry_body').change(counter);
     $('#entry_body').keydown(counter);
     $('#entry_body').keypress(counter);
     $('#entry_body').keyup(counter);
     $('#entry_body').blur(counter);
     $('#entry_body').focus(counter);
-
+    counter();
     // auto adjust the height of
-    $('#textarea_container').on( 'keyup', 'textarea', function (){
-        if(this.scrollHeight <= 500) return;
-        $(this).height( 0 );
-        $(this).height( this.scrollHeight );
-    });
-    $('#textarea_container').find( 'textarea' ).keyup();
+    //$('#textarea_container').on( 'keyup', 'textarea', function (){
+    //    if(this.scrollHeight <= 300) return;
+    //    $(this).height( 0 );
+    //    $(this).height( this.scrollHeight );
+    //});
+    //$('#textarea_container').find( 'textarea' ).keyup();
+    autosize($('textarea'));
+
 });

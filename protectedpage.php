@@ -65,6 +65,11 @@
             <?= $datemgr->print_text_area() ?>
         </div>
 
+        <div id="saved" class="text-right" style="display:none">
+            <span id="saved_words"></span> words saved at <span id="saved_time"></span>
+            <span style="color:limegreen" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+        </div>
+
         <div id="counts">
             <div style="font-weight: bold">
                 <span id="wordCount">0</span> Words.
@@ -82,7 +87,9 @@
     <!-- script references -->
     <script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/autosize.min.js"></script>
     <script type="text/javascript" src="/js/counter.js"></script>
+    <script type="text/javascript" src="/js/autosave.js"></script>
     <script type="text/javascript">
         $( document ).ready( function(){
             $( "[data-toggle='tooltip']" ).tooltip();
