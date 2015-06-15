@@ -1,7 +1,7 @@
 counter = function() {
-    var value = $('#entry_body').val();
+    var value = $('#entry_body').val() || $('#entry_body' ).text();
 
-    if (value.length == 0) {
+    if (value != undefined && value.length == 0) {
         $('#wordCount').html(0);
         $('#totalChars').html(0);
         $('#charCount').html(0);
@@ -22,6 +22,7 @@ counter = function() {
 };
 
 $(document).ready(function() {
+    counter(); // update at least once
     if( $( 'textarea' ).size() == 0) return; // no textarea
 
     $('#entry_body').change(counter);
@@ -30,7 +31,6 @@ $(document).ready(function() {
     $('#entry_body').keyup(counter);
     $('#entry_body').blur(counter);
     $('#entry_body').focus(counter);
-    counter();
     // auto adjust the height of
     //$('#textarea_container').on( 'keyup', 'textarea', function (){
     //    if(this.scrollHeight <= 300) return;

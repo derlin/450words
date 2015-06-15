@@ -42,11 +42,11 @@ if ($result != 1) {
 
 
 unset($_SESSION['error_message']);
-$username = $_SESSION['uid']; // mysql_result($result,0,'fullname');
+
 
 
 function back_to_sign_in(){
-    header("Location: /sign_in.php");
+    header("Location: /log_in.php");
     exit(0);
 }
 ?>

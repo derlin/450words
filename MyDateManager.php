@@ -55,7 +55,7 @@ class MyDateManager
     {
         $link = F::link($this->date->month_offset($i));
         ?>
-        <td><a href="/protectedpage.php?date=<?= $link ?>">
+        <td><a href="/?date=<?= $link ?>">
                 <?= $txt ?></a></td>
     <?php
     }
@@ -75,7 +75,7 @@ class MyDateManager
         <?php
         } else {
             ?>
-            <div id="text_entry">
+            <div id="entry_body">
                 <?=  $this->get_cur_text_entry() ?>
             </div>
         <?php
@@ -106,10 +106,11 @@ class MyDateManager
 
 
         if (array_key_exists($d_str, $this->existing_words)) {
-            $count = str_word_count(strip_tags($this->existing_words[$d_str]));
+            //$count = str_word_count($this->sanitize(strip_tags($this->existing_words[$d_str])));
+            $count =$this->count_words($this->existing_words[$d_str]);
             $img_src .= $count >= 750 ? '2-points.png' : '1-point.png';
             $title .= $count . ' words!';
-            $href = "protectedpage.php?date=" . $d_str;
+            $href = "/?date=" . $d_str;
 
         } elseif ($d->is_future()) { // future entry
             $img_src .= 'future-points.png';
@@ -122,7 +123,7 @@ class MyDateManager
 
         if ($d->is_now()) {
             if (!$this->date->is_now()) {
-                $href = "protectedpage.php?date=" . $d_str;
+                $href = "/?date=" . $d_str;
             }
             $title = "TODAY";
         }
@@ -136,5 +137,11 @@ class MyDateManager
         </td>
     <?php
 
+    }
+
+    private function count_words($string) {
+        $st = str_replace('\n', ' ', strip_tags($string));
+        $count = preg_split('/\s+/', trim($st));
+        return count($count);
     }
 }

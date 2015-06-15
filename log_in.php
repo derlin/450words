@@ -43,7 +43,7 @@
     ?>
 
     <div style="max-width: 400px; margin:60px auto">
-        <form method="post" action="/protectedpage.php">
+        <form method="post" action="/">
             <div class="form-group">
                 <label for="name">Pseudo</label>
                 <input type="text" class="form-control" id="name" name="uid" placeholder="Pseudo">
