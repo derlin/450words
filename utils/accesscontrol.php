@@ -3,49 +3,51 @@ include_once 'db.php';
 
 session_start();
 
+unset($_SESSION['error_message']);
 $uid = isset($_POST['uid']) ? $_POST['uid'] : $_SESSION['uid'];
-$pwd = isset($_POST['pwd']) ? $_POST['pwd'] : $_SESSION['pwd'];
+$pwd = $_POST['pwd'];
 
-if(!isset($uid)) {
-    $_SESSION['error_message'] = 'No uid.';
-    back_to_sign_in();
+if(!isset($uid) || !isset($pwd)) {
+    back_to_sign_in('Error - missing required field.');
 }
 
-$_SESSION['uid'] = $uid;
-$_SESSION['pwd'] = $pwd;
-
-echo crypt($pwd);
 $mysqli = dbConnect("words");
-$sql = $mysqli->prepare("select count(*) as c from user where userid = ? and password = ?");
-$sql->bind_param('ss', $uid, $pwd);
+$sql = $mysqli->prepare("select password from user where userid = ?");
+$sql->bind_param('s', $uid);
 
 
 if (!$sql->execute()) {
     $sql->close();
-    $_SESSION['error_message'] = 'A database error occurred while checking your '.
+    $mysqli->close();
+    back_to_sign_in('A database error occurred while checking your '.
         'login details.<br />If this error persists, please '.
-        'contact sansy.dentity@gmail.com';
-    back_to_sign_in();
+        'contact sansy.dentity@gmail.com');
 }
 
-$sql->store_result();
-$result =$sql->num_rows;
+if (!$sql->num_rows != 1) {
+    $sql->close();
+    $mysqli->close();
+    back_to_sign_in('Sorry, this username does not exist');
+}
+
+$sql->bind_result($hash);
+$sql->fetch();
 $sql->close();
+$mysqli->close();
 
-
-if ($result != 1) {
-    unset($_SESSION['uid']);
-    unset($_SESSION['pwd']);
-    $_SESSION['error_message'] = 'Access Denied. Your pseudo or password is incorrect.';
-    back_to_sign_in();
+// hash_equals: available for php >= 5.6
+// Hashing the password with its hash as the salt returns the same hash
+if (!password_verify($pwd, $hash) ) {
+    back_to_sign_in($hash . ' - crypt -' . crypt($pwd, $hash) . ' Access Denied. Your pseudo or password is incorrect
+    .');
 }
-
 
 unset($_SESSION['error_message']);
+$_SESSION['uid'] = $uid;
 
 
-
-function back_to_sign_in(){
+function back_to_sign_in($error_msg){
+    $_SESSION['error_message'] = $error_msg;
     header("Location: /log_in.php");
     exit(0);
 }
