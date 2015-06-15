@@ -2,12 +2,13 @@
 
 //////////////////////////////////////////////////
 
-echo 'not available yet';
-exit;
+//echo 'not available yet';
+//exit;
 
 //////////////////////////////////////////////////
 
 include("utils/db.php");
+include("utils/user_management.php");
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C/DTD XHTML 1.0 Transitional//EN"
@@ -32,13 +33,24 @@ include("utils/db.php");
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">750 words</a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">750 words</a>
         </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/log_in.php">Log in</a></li>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
     </div>
 </div>
 
 <div class="container">
-<h3>New User Registration Form</h3>
+    <h3>New User Registration Form</h3>
 
     <?php
     if (!isset($_POST['submitok'])):
@@ -58,66 +70,32 @@ include("utils/db.php");
             </div>
         </form>
 
+        <?php
+        if (isset($_SESSION['error_message'])) {
+            ?>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <strong>Error!</strong> <?= $_SESSION['error_message'] ?>
+            </div>
+        <?php
+        }
+        ?>
+
     <?php
     else:
         // Process signup submission
-        $mysqli = dbConnect('words');
-
-        if ($_POST['newid'] == '' or $_POST['newpwd'] == '') {
-            error('One or more required fields were left blank.' .
-                'Please fill them in and try again.');
-        }
-
-        // Check for existing user with the new id
-        $sql = $mysqli->prepare("SELECT userid FROM user WHERE userid = ?");
-        $sql->bind_param('s', $_POST['newid']);
-
-        if (!$sql->execute()) {
-            $sql->close();
-            $mysqli->close();
-            error('A database error occurred in processing your ' .
-                'submission.If this error persists, please ' .
-                'contact you@example.com.');
-        }
-
-        $rows = $sql->num_rows;
-        $sql->close();
-
-        if ($rows > 0) {
-            $mysqli->close();
-            error('A user already exists with your chosen userid.' .
-                'Please try another.');
-        }
-
-        $newpass = password_hash($_POST['newpwd'], PASSWORD_DEFAULT);
-
-        $sql = $mysqli->prepare("INSERT INTO user values(?, ?)");
-        $sql->bind_param('ss', $_POST['newid'], $newpass);
-        $res = $sql->execute();
-        $sql->close();
-        $mysqli->close();
+        list($res, $error_msg) = sign_in($_POST['newid'], $_POST['newpwd']);
 
         if (!$res) {
-            error('A database error occurred in processing your ' .
-                'submission.If this error persists, please ' .
-                'contact you@example.com.' . mysql_error());
+            back_to_sign_in($error_msg);
         }
-
         ?>
         <p><strong>User registration successful!</strong></p>
+        <p>Now, you can <a href="/log_in.php">log in</a>.</p>
     <?php
     endif;
-
-    function error($string){
     ?>
-    <p><?= $string ?></p>
-</div>
-</body>
-</html>
-<?php
-exit;
-}
-?>
 </div>
 </body>
 </html>

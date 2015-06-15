@@ -1,5 +1,13 @@
-<?php include 'utils/accesscontrol.php'; ?>
-<?php include 'MyDateManager.php'; ?>
+<?php
+include_once 'utils/user_management.php';
+
+if(!is_user_logged_in()){
+    go_to_login_page();
+}
+
+include_once 'MyDateManager.php';
+?>
+
     <!DOCTYPE html PUBLIC "-//W3C/DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml">
@@ -47,7 +55,7 @@
     <div class="container">
 
         <div class="text-center">
-            <h1><?= $_SESSION['uid'] ?>: <?= F::month_year($mydate)?></h1>
+            <h1><?= $_SESSION['uid'] ?>: <?= F::month_year($mydate) ?></h1>
 
 
             <div>
