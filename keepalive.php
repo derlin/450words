@@ -1,10 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: lucy
- * Date: 15/06/15
- * Time: 09:01
- */
 
+/**
+ * File:        keepalive.php
+ *
+ * Abstract:    a post to this page will keep the session active.
+ *
+ * Author:      Lucy Linder <lucy.derlin@gmail.com>
+ * Date:        June 2015
+ *
+ */
 session_start();
 echo "keep alive";

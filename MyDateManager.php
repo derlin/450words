@@ -128,7 +128,7 @@ class MyDateManager
             if (!$this->date->is_now()) {
                 $href = "/?date=" . $d_str;
             }
-            $title = "TODAY";
+            $title = "TODAY " . $count;
         }
 
         ?>
