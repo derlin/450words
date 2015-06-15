@@ -61,3 +61,8 @@ textarea#entry_body {
     font-size: 80%;
     font-style: italic;
 }
+
+#streak {
+    font-style: italic;
+    font-size: 80%;
+}

@@ -1,6 +1,5 @@
 <?php // signup.php
 
-include("utils/common.php");
 include("utils/db.php");
 
 if (!isset($_POST['submitok'])):

@@ -1,5 +1,4 @@
 <?php // accesscontrol.php
-include_once 'common.php';
 include_once 'db.php';
 
 session_start();
@@ -15,6 +14,7 @@ if(!isset($uid)) {
 $_SESSION['uid'] = $uid;
 $_SESSION['pwd'] = $pwd;
 
+echo crypt($pwd);
 $mysqli = dbConnect("words");
 $sql = $mysqli->prepare("select count(*) as c from user where userid = ? and password = ?");
 $sql->bind_param('ss', $uid, $pwd);

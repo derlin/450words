@@ -1,6 +1,5 @@
 <?php
 include_once('utils/db.php');
-include_once('utils/common.php');
 session_start();
 global $username;
 

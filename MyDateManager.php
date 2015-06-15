@@ -10,12 +10,14 @@ include 'MyDate.php';
 class MyDateManager
 {
 
-    private $date;
+    private $date, $max_streak, $streak;
     private $existing_words = array();
 
     public function __construct($mydate)
     {
         $this->date = $mydate;
+        $this->streak = 0;
+        $this->max_streak = 0;
 
         $mysqli = dbConnect("words");
         $sql = $mysqli->prepare('select day, word from words where userid = ? and day between ? and ?;');
@@ -48,6 +50,7 @@ class MyDateManager
 
             </tr>
         </table>
+        <div id="streak" class="text-right">Max streak <?= $this->max_streak ?>.</div>
     <?php
     }
 
@@ -141,7 +144,16 @@ class MyDateManager
 
     private function count_words($string) {
         $st = str_replace('\n', ' ', strip_tags($string));
-        $count = preg_split('/\s+/', trim($st));
-        return count($count);
+        $count = count(preg_split('/\s+/', trim($st)));
+
+        if($count > 750){
+            $this->streak += 1;
+        }else{
+            if($this->streak > $this->max_streak)
+                $this->max_streak = $this->streak;
+            $this->streak = 0;
+        }
+
+        return $count;
     }
 }
