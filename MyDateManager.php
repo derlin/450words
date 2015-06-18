@@ -32,6 +32,7 @@ class MyDateManager
             $this->existing_words[$day] = $text;
         }
         $sql->close();
+        $mysqli->close();
     }
 
     public function print_month_table()

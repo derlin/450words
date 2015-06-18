@@ -1,5 +1,5 @@
 <?php // db.php
-
+// https://github.com/joshcam/PHP-MySQLi-Database-Class
 function dbConnect($db = '')
 {
     $dbhost = 'localhost';
