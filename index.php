@@ -22,6 +22,7 @@ include_once 'MyDateManager.php';
         <![endif]-->
         <link type="text/css" href="/css/bootstrap.min.css" rel='stylesheet'/>
         <link type="text/css" href="/css/styles.css" rel='stylesheet'/>
+        <link type="text/css" href="/css/font-awesome-4.3.0/css/font-awesome.min.css" rel='stylesheet'/>
         <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
     </head>
 
@@ -59,7 +60,7 @@ include_once 'MyDateManager.php';
 
 
             <div>
-                <?= $datemgr->print_month_table() ?>
+                <?= $datemgr->print_month_overview() ?>
             </div>
 
         </div>

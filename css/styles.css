@@ -6,17 +6,10 @@ body {
     margin: 20px auto;
 }
 
-table#months_progress {
-    width: 100%;
-}
 
-table#months_progress tr td {
-    font-size: 11px;
-    font-weight: bold;
-    width: 20px;
-    text-align: center;
-    padding: 0;
-    margin: 0;
+.badge {
+    padding: 6px 9px;
+    margin: 4px;
 }
 
 .container {
@@ -29,6 +22,10 @@ body {
     font-family: Helvetica, sans-serif;
     color: #333333;
     font-size: 16px;
+}
+
+.fa {
+    color: black; /*default icon color*/
 }
 
 textarea#entry_body {

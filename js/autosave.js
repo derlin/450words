@@ -8,7 +8,8 @@ function save(){
         $.ajax( {url: "/keepalive.php"} )
             .done( function( ans ){
                 console.log( ans );
-            } );
+            } )
+            .fail(reload);
 
     }else{
         console.log( get_cur_time() + ' saving.' );
@@ -25,8 +26,13 @@ function save(){
                 $( '#saved_time' ).text( get_cur_time() );
                 last_text = text;
             }
-        } );
+        } ).fail(reload);
     }
+}
+
+
+function reload(){
+    location.reload();
 }
 
 function get_cur_time(){
