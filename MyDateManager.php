@@ -108,7 +108,7 @@ class MyDateManager
         if (array_key_exists($d_str, $this->existing_words)) {
             //$count = str_word_count($this->sanitize(strip_tags($this->existing_words[$d_str])));
             $count = $this->count_words($this->existing_words[$d_str]);
-            $badge_color .= $count >= 750 ? '#4DB559' : 'chocolate';
+            $badge_color .= $count >= 450 ? '#4DB559' : 'chocolate';
             $title .= $count . ' words!';
             $href = "/?date=" . $d_str;
 
@@ -146,7 +146,7 @@ class MyDateManager
         $st = str_replace('\n', ' ', strip_tags($string));
         $count = count(preg_split('/\s+/', trim($st)));
 
-        if ($count >= 750) {
+        if ($count >= 450) {
             $this->streak += 1;
         } else {
             if ($this->streak > $this->max_streak)

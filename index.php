@@ -15,7 +15,7 @@ include_once 'MyDateManager.php';
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
-        <title>750 words</title>
+        <title>450 words</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <!--[if lt IE 9]>
         <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -35,7 +35,7 @@ include_once 'MyDateManager.php';
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">750 words</a>
+                <a class="navbar-brand" href="#">450 words</a>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
@@ -65,7 +65,10 @@ include_once 'MyDateManager.php';
 
         </div>
 
-        <h2 class="green"><?= F::pretty($mydate) ?></h2>
+        <h2 class="green">
+            <i id="this_day_ok" class="fa fa-square-o" style="font-size: 27px"></i>
+            <?= F::pretty($mydate) ?>
+        </h2>
 
         <div id="textarea_container">
             <?= $datemgr->print_text_area() ?>
@@ -73,7 +76,7 @@ include_once 'MyDateManager.php';
 
         <div id="saved" class="text-right" style="display:none">
             <span id="saved_words"></span> words saved at <span id="saved_time"></span>
-            <span style="color:limegreen" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            <span style="color:limegreen; font-size: 20px"><i class="fa fa-check"></i></span>
         </div>
 
         <div id="counts">

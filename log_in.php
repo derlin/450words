@@ -27,7 +27,7 @@ if (!isset($_POST['submitok'])):
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/">750 words</a>
+                <a class="navbar-brand" href="/">450 words</a>
             </div>
         </div>
     </div>

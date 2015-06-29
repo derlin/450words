@@ -1,3 +1,5 @@
+var lastCount = 0;
+
 counter = function() {
     var value = $('#entry_body').val() || $('#entry_body' ).text();
 
@@ -6,6 +8,8 @@ counter = function() {
         $('#totalChars').html(0);
         $('#charCount').html(0);
         $('#charCountNoSpace').html(0);
+        $('#this_day_ok' ).css('display', 'none');
+        check_count(0);
         return;
     }
 
@@ -15,11 +19,28 @@ counter = function() {
     var charCount = value.trim().length;
     var charCountNoSpace = value.replace(regex, '').length;
 
+
     $('#wordCount').html(wordCount);
     $('#totalChars').html(totalChars);
     $('#charCount').html(charCount);
     $('#charCountNoSpace').html(charCountNoSpace);
+
+    check_count(wordCount);
 };
+
+
+function check_count(count){
+    var $icon = $( '#this_day_ok' );
+    if(count >= 450){
+        $icon.removeClass( 'fa-square-o' );
+        $icon.addClass( 'fa-check-square-o' );
+    }else{
+        $icon.removeClass( 'fa-check-square-o' );
+        $icon.addClass( 'fa-square-o' );
+    }
+
+    lastCount = count;
+}
 
 $(document).ready(function() {
     counter(); // update at least once
