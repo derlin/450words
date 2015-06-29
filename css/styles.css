@@ -60,3 +60,10 @@ textarea#entry_body {
     font-style: italic;
     font-size: 80%;
 }
+
+.footer{
+    font-size: .8em;
+    border-top: 1px solid black;
+    padding: 3px 0;
+    background-color: white;
+}

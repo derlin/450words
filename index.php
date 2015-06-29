@@ -1,7 +1,7 @@
 <?php
 include_once 'utils/user_management.php';
 
-if(!is_user_logged_in()){
+if (!is_user_logged_in()) {
     go_to_login_page();
 }
 
@@ -81,7 +81,7 @@ include_once 'MyDateManager.php';
 
         <div id="counts">
             <div style="font-weight: bold">
-                <span id="wordCount">0</span> Words.
+                <span class="wordCount">0</span> Words.
             </div>
             <div class="count_details">
                 Total Characters(including trails): <span id="totalChars">0</span><br/>
@@ -90,6 +90,16 @@ include_once 'MyDateManager.php';
             </div>
         </div>
 
+    </div>
+
+    <div class="footer navbar-fixed-bottom">
+        <div class="text-center">
+            <span><i class="fa fa-copyright"></i> 450 words </span> |
+            <span><a href="mailto:lucy.derlin@gmail.com">Contact the author</a> |</span>
+            <?= F::pretty($mydate) ?> |
+            <!--<i class="fa fa-long-arrow-right"></i>-->
+            <span class="wordCount">0</span> words.
+        </div>
     </div>
 
     <!-- /.container -->

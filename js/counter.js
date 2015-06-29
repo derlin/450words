@@ -20,7 +20,7 @@ counter = function() {
     var charCountNoSpace = value.replace(regex, '').length;
 
 
-    $('#wordCount').html(wordCount);
+    $('.wordCount').html(wordCount);
     $('#totalChars').html(totalChars);
     $('#charCount').html(charCount);
     $('#charCountNoSpace').html(charCountNoSpace);
