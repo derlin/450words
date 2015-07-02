@@ -10,14 +10,14 @@ include 'MyDate.php';
 class MyDateManager
 {
 
-    private $date, $max_streak, $streak;
+    private $date;
     private $existing_words = array();
+    private $count;
 
     public function __construct($mydate)
     {
         $this->date = $mydate;
-        $this->streak = 0;
-        $this->max_streak = 0;
+        $this->count = array_fill(0, 31, 0);
 
         $mysqli = dbConnect("words");
         $sql = $mysqli->prepare('select day, word from words where userid = ? and day between ? and ? order by day;');
@@ -46,12 +46,10 @@ class MyDateManager
                 echo $this->print_badge($i);
             }
             echo $this->print_month_link(1, 'arrow-right');
-            // also update the max streak since it is the last day processed
-            if($this->streak > $this->max_streak) $this->max_streak = $this->streak;
             ?>
 
         </div>
-        <div id="streak" class="text-right">Max streak <?= $this->max_streak ?>.</div>
+        <div id="streak" class="text-right">Max streak <?= $this->get_max_streak() ?>.</div>
     <?php
     }
 
@@ -109,9 +107,9 @@ class MyDateManager
 
         if (array_key_exists($d_str, $this->existing_words)) {
             //$count = str_word_count($this->sanitize(strip_tags($this->existing_words[$d_str])));
-            $count = $this->count_words($this->existing_words[$d_str]);
-            $badge_color .= $count >= 450 ? '#4DB559' : 'chocolate';
-            $title .= $count . ' words!';
+            $this->count[$i] = $this->count_words($this->existing_words[$d_str]);
+            $badge_color .= $this->count[$i] >= 450 ? '#4DB559' : 'chocolate';
+            $title .= $this->count[$i] . ' words!';
             $href = "/?date=" . $d_str;
 
         } elseif ($d->is_future()) { // future entry
@@ -127,7 +125,7 @@ class MyDateManager
             if (!$this->date->is_now()) {
                 $href = "/?date=" . $d_str;
             }
-            $title = "TODAY " . $count . " words.";
+            $title = "TODAY " . $this->count[$i] . " words.";
 
         }
 
@@ -146,14 +144,21 @@ class MyDateManager
         $st = str_replace('\n', ' ', strip_tags($string));
         $count = count(preg_split('/\s+/', trim($st)));
 
-        if ($count >= 450) {
-            $this->streak += 1;
-        } else {
-            if ($this->streak > $this->max_streak)
-                $this->max_streak = $this->streak;
-            $this->streak = 0;
-        }
-
         return $count;
+    }
+
+    private function get_max_streak()
+    {
+        $streak = 0;
+        $max = 0;
+        foreach ($this->count as $c) {
+            if ($c >= 450) {
+                $streak++;
+            } else {
+                if($streak > $max) $max = $streak;
+                $streak = 0;
+            }
+        }
+        return $max;
     }
 }
