@@ -84,7 +84,7 @@ include_once 'MyDateManager.php';
                 <span class="wordCount">0</span> Words.
             </div>
             <div class="count_details">
-                Total Characters(including trails): <span id="totalChars">0</span><br/>
+                Total characters (including trails): <span id="totalChars">0</span><br/>
                 Characters (excluding trails): <span id="charCount">0</span><br/>
                 Characters (excluding all spaces): <span id="charCountNoSpace">0</span>
             </div>
@@ -95,7 +95,7 @@ include_once 'MyDateManager.php';
     <div class="footer navbar-fixed-bottom">
         <div class="text-center">
             <span><i class="fa fa-copyright"></i> 450 words </span> |
-            <span><a href="mailto:lucy.derlin@gmail.com">Contact the author</a> |</span>
+            <span><a href="mailto:lucy.derlin@gmail.com">contact the author</a> |</span>
             <?= F::pretty($mydate) ?> |
             <!--<i class="fa fa-long-arrow-right"></i>-->
             <span class="wordCount">0</span> words.

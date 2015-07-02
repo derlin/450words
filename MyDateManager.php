@@ -46,6 +46,8 @@ class MyDateManager
                 echo $this->print_badge($i);
             }
             echo $this->print_month_link(1, 'arrow-right');
+            // also update the max streak since it is the last day processed
+            if($this->streak > $this->max_streak) $this->max_streak = $this->streak;
             ?>
 
         </div>
@@ -127,8 +129,6 @@ class MyDateManager
             }
             $title = "TODAY " . $count . " words.";
 
-            // also update the max streak since it is the last day processed
-            if($this->streak > $this->max_streak) $this->max_streak = $this->streak;
         }
 
 

@@ -1,5 +1,6 @@
 body {
     padding-top: 50px;
+    margin-bottom: 45px;
 }
 
 .margin-auto {
@@ -39,10 +40,12 @@ textarea#entry_body {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
+    padding-bottom: 30px;
 }
 
 #entry_body{
     margin: 30px auto;
+    min-height: 200px;
 }
 
 .green {
@@ -64,6 +67,6 @@ textarea#entry_body {
 .footer{
     font-size: .8em;
     border-top: 1px solid black;
-    padding: 3px 0;
+    height: 25px;
     background-color: white;
 }
