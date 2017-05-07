@@ -2,9 +2,9 @@
 // https://github.com/joshcam/PHP-MySQLi-Database-Class
 function dbConnect($db = '')
 {
-    $dbhost = 'localhost';
-    $dbuser = 'root';
-    $dbpass = 'vieux-boucau';
+    $dbhost = getenv('MYSQL_URL');
+    $dbuser = getenv('MYSQL_USERNAME');
+    $dbpass = getenv('MYSQL_PASSWORD');
 
     //ini_set('display_errors', '1');
     //error_reporting(E_ALL);

@@ -1,0 +1,36 @@
+version: '2'
+services:
+
+  db:
+    image: mysql:latest # https://hub.docker.com/_/mysql/ - or mariadb https://hub.docker.com/_/mariadb
+    ports:
+      - 127.0.0.1:3307:3306 # change ip if required
+    volumes:
+      # for init: comment after the first docker-compose up 
+      - ./db-init:/docker-entrypoint-initdb.d
+      - ./db-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: words
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker     
+    restart: unless-stopped
+
+  apache:
+    image: derlin/apache-php
+    ports:
+      - 127.0.0.1:80:80 # change ip if required
+    volumes:
+      # sites directory: add the sources
+      - ../src:/var/www/450words
+      # copy the apache configuration. Don't forget to update it to match the content
+      # of the www directory !
+      - ./apache-config.conf:/etc/apache2/sites-enabled/000-default.conf
+    environment:
+      MYSQL_URL: "db:3306"
+      MYSQL_USERNAME: docker
+      MYSQL_PASSWORD: docker
+    depends_on:
+      - db
+    links:
+      - db:db 
