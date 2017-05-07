@@ -25,6 +25,16 @@ __450words__ is a local (and stripped) version of 750words. It allows you to wri
 
 Also, you noticed that I downgraded from 750 to 450 words. Why ? Because 3 pages are hard to achieve when you don't have much going on in your life... I often had a hard time getting the green dot, so I decided to target a smaller amount of words. Of course, you are free to go above this limit if you want.
 
+## Screenshots
+
+Current day page, ready for your thoughts: 
+
+![screenshot 1: index](http://i.imgur.com/md9z7Rf.png)
+
+Browsing history:
+
+![screenshot 2: history](http://i.imgur.com/Rju5szc.png)
+
 ## Requirements 
 
 The only thing you need is an Apache-PHP-MySQL instance or Docker, some storage space and a bit of motivation to get started.
