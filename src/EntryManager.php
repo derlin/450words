@@ -6,8 +6,9 @@
  * Time: 16:25
  */
 include 'MyDate.php';
+include_once 'utils/utils.php';
 
-class MyDateManager
+class EntryManager
 {
 
     private $date;
@@ -41,11 +42,11 @@ class MyDateManager
         ?>
         <div id="months_progress" class="margin-auto">
             <?php
-            echo $this->print_month_link(-1, 'arrow-left');
+            //echo $this->print_month_link(-1, 'arrow-left');
             for ($i = 1; $i <= $c; $i++) {
                 echo $this->print_badge($i);
             }
-            echo $this->print_month_link(1, 'arrow-right');
+            //echo $this->print_month_link(1, 'arrow-right');
             ?>
 
         </div>
@@ -70,7 +71,7 @@ class MyDateManager
             </div>
             <form>
                 <input type="text" id="day" name="day" hidden="hidden" value="<?= (string)$this->date ?>"/>
-                <textarea id="entry_body" name="entry_body"
+                <textarea id="entry_body" name="entry_body" placeholder="thoughts here..."
                     ><?= $this->get_cur_text_entry(false) ?></textarea>
             </form>
         <?php
@@ -90,9 +91,7 @@ class MyDateManager
         $key = F::link($this->date);
         if (array_key_exists($key, $this->existing_words)) {
             $text = $this->existing_words[$key];
-            $text = str_replace('\n', 'NNEWLINEE', $text);
-            $text = stripslashes($text);
-            $text = str_replace('NNEWLINEE', $as_html ? '<br />' : '&#10;', $text);
+            $text = sanitize_entry($text, $as_html);
         }
         return $text;
     }

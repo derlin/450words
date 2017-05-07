@@ -22,4 +22,22 @@ function dbConnect($db = '')
     return $mysqli;
 }
 
+
+function getActiveDates($from, $to){
+    $mysqli = dbConnect("words");
+    $sql = $mysqli->prepare('select day, word from words where userid = ? and day between ? and ? order by day;');
+    $sql->bind_param('sss', $_SESSION['uid'], //
+        F::link($this->date->get_date_for(1)), //
+        F::link($this->date->get_date_for(31)));
+
+    $sql->bind_result($day, $text);
+    $sql->execute();
+
+    while ($row = $sql->fetch()) {
+        $this->existing_words[$day] = $text;
+    }
+    $sql->close();
+    $mysqli->close();
+}
+
 ?>

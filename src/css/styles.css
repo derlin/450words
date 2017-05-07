@@ -1,3 +1,6 @@
+/* *****************************************************************
+ * general
+ * ****************************************************************/
 body {
     padding-top: 50px;
     margin-bottom: 45px;
@@ -7,11 +10,6 @@ body {
     margin: 20px auto;
 }
 
-
-.badge {
-    padding: 6px 9px;
-    margin: 4px;
-}
 
 .container {
     text-align: justify;
@@ -25,6 +23,33 @@ body {
     font-size: 16px;
 }
 
+
+.footer{
+    font-size: .8em;
+    height: 25px;
+    color: #aaa;
+}
+
+.footer a {
+    color: inherit;;
+}
+
+.footer .sep {
+    color: #4DB559;
+}
+
+.footer .wordCount {
+    color: white;
+}
+
+/* *****************************************************************
+ * entry
+ * ****************************************************************/
+
+.badge {
+    padding: 6px 9px;
+    margin: 4px;
+}
 
 textarea#entry_body {
     resize: none;
@@ -64,9 +89,46 @@ textarea#entry_body {
     font-size: 80%;
 }
 
-.footer{
-    font-size: .8em;
-    border-top: 1px solid black;
-    height: 25px;
-    background-color: white;
+
+/* icons (instead of downloading the full font-awesome */
+
+.fa, .fa::before {
+    display: inline-block;
+    font-style: normal;
+    color: #4DB559;
+}
+
+.fa.fa-arrow-left::before{
+    content: '➵';
+    transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+}
+
+.fa.fa-arrow-right::before{
+    content: '➵';
+}
+
+/* *****************************************************************
+ * history
+ * ****************************************************************/
+
+div.pagination {
+    text-align: center;
+    display: block;
+}
+
+div.entries-list{
+    margin: 30px 0;
+}
+
+div.entries-list li {
+    margin: 10px 0;
+}
+
+div.entries-list li a.day::after {
+    content: '⟿';
+    display: inline-block;
+    margin: 0 5px;
+    color: #aaa;
 }
