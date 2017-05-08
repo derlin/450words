@@ -85,4 +85,11 @@ To create a user, navigate to http://localhost/signup.php. You are all set !
 
 Note that the mysql database is persisted in `docker/db-data` (a _volume_, see the `docker-compose.yaml` file), so you won't lose your data when you stop docker (as long as you commented the line as stated in point 6!).  
 
+_Dump the content of the database_: to backup your database content using Docker, first ensure the mysql container is running (`
+docker-compose up`
+), then type:
+
+        docker exec -it docker_db_1 mysqldump -u docker --password=docker words > words.sql 
+        
+--------------------- 
 _Lucy Linder, summer 2015_
