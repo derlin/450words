@@ -1,6 +1,6 @@
 # inspired from https://writing.pupius.co.uk/apache-and-php-on-docker-44faef716150 
 
-FROM ubuntu:latest
+FROM ubuntu:16.04
 MAINTAINER Lucy Linder <lucy.derlin@gmail.com>
 
 # Install apache, PHP, and supplimentary programs. openssh-server, curl, and lynx-cur are for debugging the container.
