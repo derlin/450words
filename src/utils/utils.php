@@ -8,4 +8,15 @@ function sanitize_entry($text, $as_html = true)
     return $text;
 }
 
+
+function entry_to_markdown($text, $as_html = true)
+{
+    $text = str_replace('\n', 'NNEWLINEE', $text);
+    $text = stripslashes($text);
+    $text = strip_tags($text);
+    $text = str_replace('*', '✶', $text);
+    $text = str_replace('NNEWLINEE', "\n", $text);
+    return $text;
+}
+
 ?>

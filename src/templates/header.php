@@ -28,12 +28,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">450 words</a>
+            <a class="navbar-brand" href="/">450 words</a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li <?php if($curpage == 'index') echo 'class="active"'?>><a href="/">Home</a></li>
                 <li <?php if($curpage == 'history') echo 'class="active"'?>><a href="history.php">History</a></li>
+                <li><a href="export.php" target="_new">Export</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <?php if(isset($_SESSION['uid'])) {
