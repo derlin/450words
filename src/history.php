@@ -18,16 +18,25 @@ $curpage = "history";
 include 'templates/header.php';  // the html: navigation
 ?>
 <div class="container">
-    <h2><?= $historyManager->get_display_description() ?></h2>
-    <div class="pagination">
-        <?php $historyManager->print_pagination() ?>
-    </div>
-    <div class="entries-list">
-        <?php $historyManager->print_entries() ?>
-    </div>
-</div>
-
-
 <?php
-
+    if ($historyManager->get_count() == 0) {
+        ?>
+        <h2>History</h2>
+        <p>No history yet. Write something first !</p>
+        <?php
+    } else {
+        ?>
+        <h2><?= $historyManager->get_display_description() ?></h2>
+        <div class="pagination">
+            <?php $historyManager->print_pagination() ?>
+        </div>
+        <div class="entries-list">
+            <?php $historyManager->print_entries() ?>
+        </div>
+        <?php
+    }
+?>
+</div>
+<?php
 include 'templates/footer.php';
+?>

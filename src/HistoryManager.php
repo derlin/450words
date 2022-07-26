@@ -24,13 +24,13 @@ class HistoryManager
         $mysqli = dbConnect("words");
 
         // get count
-        $stmt = $mysqli->query("SELECT COUNT(*) FROM `words`");
+        $stmt = $mysqli->query("SELECT COUNT(*) FROM `words` where userid = '" . $_SESSION['uid'] . "'");
         $this->count = $stmt->fetch_row()[0];
         $this->pages_count = ceil($this->count / $this->per_page);
         $stmt->close();
 
         // fix out-of-range pages
-        if($page >= $this->pages_count) {
+        if($page > 0 && $page >= $this->pages_count) {
             $this->page = $this->pages_count - 1;
         }
 
@@ -74,6 +74,8 @@ class HistoryManager
 
         $n_pages = $this->pages_count;
         $page = $this->page;
+
+        if ($n_pages == 0) return; // no need for pagination if no data...
         ?>
         <nav aria-label="pagination" xmlns="http://www.w3.org/1999/html">
         <ul class="pagination"><?php
