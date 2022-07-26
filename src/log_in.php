@@ -70,6 +70,7 @@ if (!isset($_POST['submitok'])):
 
         </div>
 
+        <p class="text-center">No account? Create one <a href="signup.php">here.</a></p>
     </div>
     <!-- /.container -->
     <!-- script references -->
