@@ -19,14 +19,14 @@ include 'templates/header.php';  // the html: navigation
 ?>
 <div class="container">
     <h2><?= $historyManager->get_display_description() ?></h2>
+    <div class="pagination">
+        <?php $historyManager->print_pagination() ?>
+    </div>
     <div class="entries-list">
         <?php $historyManager->print_entries() ?>
     </div>
 </div>
 
-<div class="pagination">
-    <?php $historyManager->print_pagination() ?>
-</div>
 
 <?php
 

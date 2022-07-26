@@ -68,26 +68,45 @@ class HistoryManager
 
     public function print_pagination()
     {
-        $nb = 4;
+        $nb = 7;        // number of items to display
+        $nb_side = $nb - 2;  // consecutive items on the side (2 = ellipsis + last item)
+        $nb_middle = intdiv($nb - $nb_side, 2); // items on left and right if in the middle of the range ($nb - 1(current page) - 4(extremity + ellispis))/2
 
+        $n_pages = $this->pages_count;
+        $page = $this->page;
         ?>
         <nav aria-label="pagination" xmlns="http://www.w3.org/1999/html">
         <ul class="pagination"><?php
-            if ($this->pages_count <= 2 * $nb) {
-                $navigation_pages = range(0, $this->pages_count-1);
+            if ($n_pages <= $nb) {
+                // we can display all
+                $navigation_pages = range(0, $n_pages - 1);
+            } else if ($page < $nb_side - 1) { // minus one since we start at index 0
+                // the page is at the beginning, no ellipsis on the left
+                $navigation_pages = array_merge(range(0, $nb_side - 1), array('...', $n_pages - 1));
+            } else if ($page > $n_pages - $nb_side) {
+                // the page is at the end, no ellipsis on the right
+                $navigation_pages = array_merge(array(0, '...'), range($n_pages - $nb_side, $n_pages - 1));
             } else {
-                $navigation_pages = array_merge(range(0, $nb-1), array('...'), range($this->pages_count - $nb, $this->pages_count-1));
+                // the page in the middle, ellispsis on both sides
+                $navigation_pages = array_merge(array(0, '...'), range($page - $nb_middle, $page + $nb_middle), array('...', $n_pages - 1));
             }
 
+            // now, construct the pagination, adding < and > at each extremity.
+            ?>
+            <li class="<?= $page == 0 ? 'disabled' : '' ?>"><a href="<?= $this->create_pagination_link($page - 1) ?>">&lt;</a></li>
+            <?php
             foreach ($navigation_pages as $i) {
-                $classes = $i === '...' || $i == $this->page ? "active disabled" : '';
-                $link = sprintf("?date=%s&page=%d&per_page=%d", F::link($this->date), $i, $this->per_page);
+                $class = $i === '...' ? "disabled" : ($i == $page ? "active" : ""); 
                 ?>
-                <li class="<?= $classes ?>"><a href="<?= $link ?>"><?= $i ?></a></li>
+                <li class="<?= $class ?>"><a href="<?= $this->create_pagination_link($i) ?>"><?= $i ?></a></li>
                 <?php
             }
-
-            ?></ul></nav><?php
+            ?>
+            <li class="<?= $page == $n_pages - 1 ? 'disabled' : '' ?>"><a href="<?= $this->create_pagination_link($page + 1) ?>">&gt;</a></li>
+        
+        </ul>
+        </nav>
+        <?php
     }
 
     public function print_entries()
@@ -114,6 +133,10 @@ class HistoryManager
         $count = count(preg_split('/\s+/', trim($st)));
 
         return $count;
+    }
+
+    private function create_pagination_link($page) {
+        return sprintf("?date=%s&page=%d&per_page=%d", F::link($this->date), $page, $this->per_page);
     }
 
 
