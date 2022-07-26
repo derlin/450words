@@ -18,9 +18,11 @@ include 'templates/header.php';  // the html: navigation
 
     <div class="text-center">
         <h1>
-            <?= $datemgr->print_month_link(-1, 'arrow-left'); ?>
-            <?= F::month_year($mydate) ?>
-            <?= $datemgr->print_month_link(1, 'arrow-right'); ?>
+            <div class="flex">
+                <div class="icon"><?= $datemgr->print_month_link(-1, 'arrow-left'); ?></div>
+                <div class="title"><?= F::month_year($mydate) ?></div>
+                <div class="icon"><?= $datemgr->print_month_link(1, 'arrow-right'); ?></div>
+            </div>
         </h1>
 
 

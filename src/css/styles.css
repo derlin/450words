@@ -46,6 +46,16 @@ body {
  * entry
  * ****************************************************************/
 
+h1 > div.flex {
+    display: flex;
+    align-items: center;
+    margin: auto;
+}
+
+h1 > div.flex .title {
+    flex-grow: 1;
+}
+
 .badge {
     padding: 6px 9px;
     margin: 4px;
