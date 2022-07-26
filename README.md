@@ -73,23 +73,23 @@ Here, you need an Apache server with PHP and MySQL enabled and a MySQL database.
 __Using Docker__
 
 1. `cd` into `docker`: `cd docker`
-2. create the Apache image: `./build-image.sh` or simply `docker build -t derlin/apache-php .`
-3. launch 450words: `docker-compose up -d`
-4. navigate to http://localhost and ensure it is working
-5. stop the container: `docker-compose stop`
-6. open `docker-compose.yaml` and comment the line below. If you don't do it, the mysql database will be recreated everytime you restart the container and your awesome writing won't persist:
-        
-         - ./db-init:/docker-entrypoint-initdb.d
+2. launch 450words: `docker-compose up -d`
+3. navigate to http://localhost and ensure it is working
+4. stop the container: `docker-compose stop`
 
 To create a user, navigate to http://localhost/signup.php. You are all set !
 
-Note that the mysql database is persisted in `docker/db-data` (a _volume_, see the `docker-compose.yaml` file), so you won't lose your data when you stop docker (as long as you commented the line as stated in point 6!).  
+Note that the mysql database is persisted in `docker/db-data` (a _volume_, see the `docker-compose.yaml` file), so you won't lose your data when you stop docker.
 
 _Dump the content of the database_: to backup your database content using Docker, first ensure the mysql container is running (`
 docker-compose up`
 ), then type:
 
         docker exec -it docker_db_1 mysqldump -u docker --password=docker words > words.sql 
-        
+
+## Note to self
+
+For my future self: the data from 2015 are stored on Google Drive, under *_Writings* (both markdown and sql - the latter can be put in the db-init folder).
+
 --------------------- 
 _Lucy Linder, summer 2015_
