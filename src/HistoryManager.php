@@ -13,7 +13,7 @@ class HistoryManager
 
     private $date;
     private $existing_entries = array();
-    private $page, $per_page, $count, $pages_count;
+    private $page, $per_page, $offset, $count, $pages_count;
 
     public function __construct($date, $page = 0, $per_page = 40, $ellipsis = 70)
     {
@@ -35,10 +35,10 @@ class HistoryManager
         }
 
         // get data
-        $offset = $this->page * $this->per_page;
+        $this->offset = $this->page * $this->per_page;
         $stmt = $mysqli->prepare('select day, word from words where userid = ? and day <= ? order by day desc limit ? offset ?;');
         $stmt->bind_param('ssdd', $_SESSION['uid'], //
-            F::link($date), $per_page, $offset);
+            F::link($date), $per_page, $this->offset);
 
         $stmt->bind_result($day, $text);
         $stmt->execute();
@@ -48,8 +48,6 @@ class HistoryManager
         }
         $stmt->close();
         $mysqli->close();
-
-        echo count($this->existing_entries);
     }
 
     public function get_count()
@@ -60,6 +58,11 @@ class HistoryManager
     public function get_display_count()
     {
         return count($this->existing_entries);
+    }
+
+    public function get_display_description()
+    {
+        return 'Entries ' . $this->offset . '-' . ($this->offset + $this->get_display_count()) . ' out of ' . $this->get_count();
     }
 
 
@@ -77,7 +80,7 @@ class HistoryManager
             }
 
             foreach ($navigation_pages as $i) {
-                $classes = $i === '...' || $i === $this->page ? "active disabled" : '';
+                $classes = $i === '...' || $i == $this->page ? "active disabled" : '';
                 $link = sprintf("?date=%s&page=%d&per_page=%d", F::link($this->date), $i, $this->per_page);
                 ?>
                 <li class="<?= $classes ?>"><a href="<?= $link ?>"><?= $i ?></a></li>
