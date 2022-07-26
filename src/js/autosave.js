@@ -22,7 +22,7 @@ function save(){
             console.log( ans );
             if( ans.match( '.* 1' ) ){
                 $( '#saved' ).css( 'display', 'block' );
-                $( '#saved_words' ).text( $('#wordCount' ).text() );
+                $( '#saved_words' ).text( $('.wordCount' ).first().text() );
                 $( '#saved_time' ).text( get_cur_time() );
                 last_text = text;
             }
@@ -46,7 +46,7 @@ $( document ).ready( function(){
     last_text = $( '#entry_body' ).val().trim();
     setInterval( function(){
         save();
-    }, 60000 );
+    }, 10000 );
 } );
 
 function get_textarea_value(){
