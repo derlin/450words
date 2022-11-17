@@ -3,7 +3,7 @@
 FROM ubuntu:16.04
 MAINTAINER Lucy Linder <lucy.derlin@gmail.com>
 
-WORKDIR /var/www
+WORKDIR /app
 
 # Install apache, PHP, and supplimentary programs. openssh-server, curl, and lynx-cur are for debugging the container.
 RUN apt-get update && apt-get -y upgrade && DEBIAN_FRONTEND=noninteractive apt-get -y install \
@@ -31,7 +31,7 @@ EXPOSE 80
 # Update the default apache site with the config we created.
 ADD apache-config.conf /etc/apache2/sites-enabled/000-default.conf
 # Copy this repo into place.
-ADD src /var/www/450words
+ADD src /app
 
 # By default start up apache in the foreground, override with /bin/bash for interative.
 # CMD /usr/sbin/apache2ctl -D FOREGROUND

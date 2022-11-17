@@ -4,7 +4,8 @@ function dbConnect($db = '')
 {
     // in the form of "schema://<username>:<password>@<address>:<port>/<name>"
     $dburl = getenv('DATABASE_URL');
-    $pattern = "{([^:]+)://([^:]+):([^@]+)@([^:]+):(\d+)/(.*)}";
+
+    $pattern = "{([^:]+)://([^:]+)(?::([^@]+))?@([^:]+):(\d+)/(.*)}";
     if (!preg_match($pattern, $dburl, $matches)) {
         echo "Could not extract database information from DATABASE_URL";
     }
