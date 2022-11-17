@@ -1,7 +1,9 @@
-# inspired from https://writing.pupius.co.uk/apache-and-php-on-docker-44faef716150 
+# inspired from https://writing.pupius.co.uk/apache-and-php-on-docker-44faef716150
 
 FROM ubuntu:16.04
 MAINTAINER Lucy Linder <lucy.derlin@gmail.com>
+
+WORKDIR /var/www
 
 # Install apache, PHP, and supplimentary programs. openssh-server, curl, and lynx-cur are for debugging the container.
 RUN apt-get update && apt-get -y upgrade && DEBIAN_FRONTEND=noninteractive apt-get -y install \
@@ -26,10 +28,10 @@ ENV APACHE_PID_FILE /var/run/apache2.pid
 EXPOSE 80
 
 # ----
-# Copy this repo into place.
-#ADD www /var/www/site
 # Update the default apache site with the config we created.
-#ADD apache-config.conf /etc/apache2/sites-enabled/000-default.conf
+ADD apache-config.conf /etc/apache2/sites-enabled/000-default.conf
+# Copy this repo into place.
+ADD src /var/www/450words
 
 # By default start up apache in the foreground, override with /bin/bash for interative.
 # CMD /usr/sbin/apache2ctl -D FOREGROUND
